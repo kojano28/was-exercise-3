@@ -1,0 +1,40 @@
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+PREFIX td: <https://www.w3.org/2019/wot/td#>
+
+INSERT {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#> {
+    ?coords1 a was:Coordinates, td:Thing ;
+             td:hasBase <http://localhost:1080/api/coordinates/1/>;
+             was:x1 0 ;
+             was:y1 0 ;
+             was:x2 1 ;
+             was:y2 1 .
+
+    ?coords2 a was:Coordinates, td:Thing ;
+             td:hasBase <http://localhost:1080/api/coordinates/2/>;
+             was:x1 1 ;
+             was:y1 0 ;
+             was:x2 2 ;
+             was:y2 1 .
+
+    ?coords3 a was:Coordinates, td:Thing ;
+             td:hasBase <http://localhost:1080/api/coordinates/3/>;
+             was:x1 0 ;
+             was:y1 1 ;
+             was:x2 1 ;
+             was:y2 2 .
+
+    ?coords4 a was:Coordinates, td:Thing ;
+             td:hasBase <http://localhost:1080/api/coordinates/4/>;
+             was:x1 1 ;
+             was:y1 1 ;
+             was:x2 2 ;
+             was:y2 2 .
+  }
+}
+WHERE {
+  BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-", strUUID())) AS ?coords1)
+  BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-", strUUID())) AS ?coords2)
+  BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-", strUUID())) AS ?coords3)
+  BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-", strUUID())) AS ?coords4)
+}

@@ -33,4 +33,10 @@ The tractors are operated by two autonomous agents: An agent that monitors the c
 - **Coordinates**: A set of 4 coordinates [X1,Y1,X2,Y2] that define the opposite corners of a square section at points [X1,Y1] and [X2,Y2].
 - **SoilMoisture**: The level of moisture in soil.
 - ...
-- *Complete the glossary for definiting terms required to model the motivating scenario of the domain. These terms will then be formally defined in your TBox.*
+
+### Added terms
+- **Crop**: A cultivated plant grown on a farm for agricultural production.
+- **Corn**: A type of crop.
+- **Wheat**: A type of crop.
+- **LandSection**: A distinct area within a farm, defined by its coordinates, that is allocated for growing a specific crop.
+

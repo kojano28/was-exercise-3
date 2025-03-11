@@ -1,0 +1,16 @@
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+PREFIX td: <https://www.w3.org/2019/wot/td#>
+
+INSERT {
+    GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#>
+    {
+        ?wheat a was:Crop, was:Wheat;
+         	was:RequiredMoistureLevel "120".
+
+        ?corn a was:Crop, was:Corn;
+         	was:RequiredMoistureLevel "80".
+    }.
+} WHERE {
+	BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-", strUUID())) AS ?wheat)
+	BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-", strUUID())) AS ?corn)
+}

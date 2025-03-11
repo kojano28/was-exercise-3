@@ -1,0 +1,13 @@
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+
+SELECT ?x1 ?y1 ?x2 ?y2 WHERE {
+GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#> {
+   bind (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-b054bd36-c8f2-4d4e-b1b8-16d3d34df928> as ?section)
+   ?section a was:LandSection.
+   ?section was:hasCoordinates ?coords.
+   ?coords was:x1 ?x1.
+   ?coords was:y1 ?y1.
+   ?coords was:x2 ?x2.
+   ?coords was:y2 ?y2.
+ }
+}

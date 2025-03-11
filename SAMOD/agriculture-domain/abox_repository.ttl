@@ -1,0 +1,620 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+
+<https://was-course.interactions.ics.unisg.ch/farm-ontology#> a owl:Ontology;
+  rdfs:comment "An ontology for representing knowledge useful for the management of farms."@en;
+  vann:preferredNamespacePrefix "was" .
+
+was:Farm a owl:Class;
+  rdfs:subClassOf _:node25, _:node51, _:node52, _:node77, _:node78, _:node158, _:node159;
+  rdfs:comment "A plot of land devoted to the growing of crops."@en, "A single farm that includes at least one land section and one tractor."@en;
+  rdfs:label "Farm" .
+
+was:Tractor a owl:Class;
+  rdfs:subClassOf _:node1, _:node26, _:node53, _:node79, _:node160;
+  rdfs:comment "An automotive vehicle that offers affordances to agents for managing a farm. In this scenario, one tractor offers a reading affordance and one offers an irrigating affordance."@en .
+
+_:node1 a owl:Restriction;
+  owl:onProperty was:offersAffordance;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+was:offersAffordance a owl:ObjectProperty;
+  rdfs:domain was:Tractor;
+  rdfs:range _:node11, _:node36, _:node63, _:node89, _:node170;
+  rdfs:comment "Indicates the affordance a tractor offers, either for reading or for irrigating."@en .
+
+was:ReadSoilMoistureAffordance a owl:Class;
+  rdfs:comment "An affordance offered by the environment to agents for reading the moisture level of soil."@en .
+
+was:IrrigateAffordance a owl:Class;
+  rdfs:comment "An affordance offered by the environment to agents for irrigating the soil."@en .
+
+was:SoilMoisture a owl:Class;
+  rdfs:subClassOf _:node2, _:node27, _:node54, _:node80, _:node161;
+  rdfs:comment "The level of moisture in soil."@en .
+
+_:node2 a owl:Restriction;
+  owl:onProperty was:currentMoistureLevel;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+was:currentMoistureLevel a owl:DatatypeProperty;
+  rdfs:domain was:SoilMoisture;
+  rdfs:range xsd:integer;
+  rdfs:comment "The current moisture level measurement of the soil."@en .
+
+was:Coordinates a owl:Class;
+  rdfs:subClassOf _:node3, _:node4, _:node5, _:node6, _:node28, _:node29, _:node30,
+    _:node31, _:node55, _:node56, _:node57, _:node58, _:node81, _:node82, _:node83, _:node84,
+    _:node162, _:node163, _:node164, _:node165;
+  rdfs:comment "A set of 4 coordinates [x1, y1, x2, y2] that define the opposite corners of a square section."@en .
+
+_:node3 a owl:Restriction;
+  owl:onProperty was:x1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+was:x1 a owl:DatatypeProperty;
+  rdfs:domain was:Coordinates;
+  rdfs:range xsd:integer;
+  rdfs:comment "The x1 coordinate of the coordinates."@en .
+
+_:node4 a owl:Restriction;
+  owl:onProperty was:y1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+was:y1 a owl:DatatypeProperty;
+  rdfs:domain was:Coordinates;
+  rdfs:range xsd:integer;
+  rdfs:comment "The y1 coordinate of the coordinates."@en .
+
+_:node5 a owl:Restriction;
+  owl:onProperty was:x2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+was:x2 a owl:DatatypeProperty;
+  rdfs:domain was:Coordinates;
+  rdfs:range xsd:integer;
+  rdfs:comment "The x2 coordinate of the coordinates."@en .
+
+_:node6 a owl:Restriction;
+  owl:onProperty was:y2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+was:y2 a owl:DatatypeProperty;
+  rdfs:domain was:Coordinates;
+  rdfs:range xsd:integer;
+  rdfs:comment "The y2 coordinate of the coordinates."@en .
+
+was:Crop a owl:Class;
+  rdfs:subClassOf _:node7, _:node32, _:node59, _:node85, _:node166;
+  rdfs:comment "A cultivated plant grown on a farm for agricultural production."@en .
+
+_:node7 a owl:Restriction;
+  owl:onProperty was:RequiredMoistureLevel;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+was:RequiredMoistureLevel a owl:DatatypeProperty;
+  rdfs:domain was:Crop;
+  rdfs:range xsd:integer;
+  rdfs:comment "The required moisture level for a crop."@en .
+
+was:Wheat a owl:Class;
+  rdfs:subClassOf was:Crop;
+  rdfs:comment "A crop of type wheat."@en;
+  rdfs:label "Wheat" .
+
+was:Corn a owl:Class;
+  rdfs:subClassOf was:Crop;
+  rdfs:comment "A crop of type corn."@en;
+  rdfs:label "Corn" .
+
+was:LandSection a owl:Class;
+  rdfs:subClassOf _:node8, _:node9, _:node10, _:node33, _:node34, _:node35, _:node60,
+    _:node61, _:node62, _:node86, _:node87, _:node88, _:node167, _:node168, _:node169;
+  rdfs:comment "A distinct area within a farm, defined by its coordinates, that is allocated for growing a specific crop."@en .
+
+_:node8 a owl:Restriction;
+  owl:onProperty was:growsCrop;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Crop .
+
+was:growsCrop a owl:ObjectProperty;
+  rdfs:domain was:LandSection;
+  rdfs:range was:Crop;
+  rdfs:comment "Links a land section to the crop growing on it."@en .
+
+_:node9 a owl:Restriction;
+  owl:onProperty was:hasSoilMoisture;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:SoilMoisture .
+
+was:hasSoilMoisture a owl:ObjectProperty;
+  rdfs:domain was:LandSection;
+  rdfs:range was:SoilMoisture;
+  rdfs:comment "Links a land section to its soil moisture measurement."@en .
+
+_:node10 a owl:Restriction;
+  owl:onProperty was:hasCoordinates;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Coordinates .
+
+was:hasCoordinates a owl:ObjectProperty;
+  rdfs:domain was:LandSection;
+  rdfs:range was:Coordinates;
+  rdfs:comment "Links a land section to its coordinates."@en .
+
+was:Agent a owl:Class;
+  rdfs:comment "An autonomous agent that can operate tractors."@en .
+
+was:hasTractor a owl:ObjectProperty;
+  rdfs:domain was:Farm;
+  rdfs:range was:Tractor;
+  rdfs:comment "Links a farm to its tractors."@en .
+
+was:hasLandSection a owl:ObjectProperty;
+  rdfs:domain was:Farm;
+  rdfs:range was:LandSection;
+  rdfs:comment "Links a farm to its land sections."@en .
+
+was:operatesTractor a owl:ObjectProperty;
+  rdfs:domain was:Agent;
+  rdfs:range was:Tractor;
+  rdfs:comment "Links an agent to the tractor it operates."@en .
+
+_:node25 a owl:Restriction;
+  owl:onProperty was:hasLandSection;
+  owl:maxCardinality "4"^^xsd:nonNegativeInteger .
+
+_:node26 a owl:Restriction;
+  owl:onProperty was:offersAffordance;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node27 a owl:Restriction;
+  owl:onProperty was:currentMoistureLevel;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node28 a owl:Restriction;
+  owl:onProperty was:x1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node29 a owl:Restriction;
+  owl:onProperty was:y1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node30 a owl:Restriction;
+  owl:onProperty was:x2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node31 a owl:Restriction;
+  owl:onProperty was:y2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node32 a owl:Restriction;
+  owl:onProperty was:RequiredMoistureLevel;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node33 a owl:Restriction;
+  owl:onProperty was:growsCrop;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Crop .
+
+_:node34 a owl:Restriction;
+  owl:onProperty was:hasSoilMoisture;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:SoilMoisture .
+
+_:node35 a owl:Restriction;
+  owl:onProperty was:hasCoordinates;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Coordinates .
+
+_:node51 a owl:Restriction;
+  owl:onProperty was:hasLandSection;
+  owl:maxCardinality "4"^^xsd:nonNegativeInteger;
+  owl:minCardinality "4"^^xsd:nonNegativeInteger .
+
+_:node52 a owl:Restriction;
+  owl:onProperty was:hasTractor;
+  owl:maxCardinality "2"^^xsd:nonNegativeInteger .
+
+_:node53 a owl:Restriction;
+  owl:onProperty was:offersAffordance;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node54 a owl:Restriction;
+  owl:onProperty was:currentMoistureLevel;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node55 a owl:Restriction;
+  owl:onProperty was:x1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node56 a owl:Restriction;
+  owl:onProperty was:y1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node57 a owl:Restriction;
+  owl:onProperty was:x2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node58 a owl:Restriction;
+  owl:onProperty was:y2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node59 a owl:Restriction;
+  owl:onProperty was:RequiredMoistureLevel;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node60 a owl:Restriction;
+  owl:onProperty was:growsCrop;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Crop .
+
+_:node61 a owl:Restriction;
+  owl:onProperty was:hasSoilMoisture;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:SoilMoisture .
+
+_:node62 a owl:Restriction;
+  owl:onProperty was:hasCoordinates;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Coordinates .
+
+_:node77 a owl:Restriction;
+  owl:onProperty was:has;
+  owl:someValuesFrom was:LandSection .
+
+was:has a owl:ObjectProperty;
+  rdfs:domain was:Farm;
+  rdfs:range was:Tractor, was:LandSection .
+
+_:node78 a owl:Restriction;
+  owl:onProperty was:has;
+  owl:someValuesFrom was:Tractor .
+
+_:node79 a owl:Restriction;
+  owl:onProperty was:offersAffordance;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node80 a owl:Restriction;
+  owl:onProperty was:currentMoistureLevel;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node81 a owl:Restriction;
+  owl:onProperty was:x1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node82 a owl:Restriction;
+  owl:onProperty was:y1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node83 a owl:Restriction;
+  owl:onProperty was:x2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node84 a owl:Restriction;
+  owl:onProperty was:y2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node85 a owl:Restriction;
+  owl:onProperty was:RequiredMoistureLevel;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node86 a owl:Restriction;
+  owl:onProperty was:growsCrop;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Crop .
+
+_:node87 a owl:Restriction;
+  owl:onProperty was:hasSoilMoisture;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:SoilMoisture .
+
+_:node88 a owl:Restriction;
+  owl:onProperty was:hasCoordinates;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Coordinates .
+
+_:node158 a owl:Restriction;
+  owl:onProperty was:has;
+  owl:someValuesFrom was:LandSection .
+
+_:node159 a owl:Restriction;
+  owl:onProperty was:has;
+  owl:someValuesFrom was:Tractor .
+
+_:node160 a owl:Restriction;
+  owl:onProperty was:offersAffordance;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node161 a owl:Restriction;
+  owl:onProperty was:currentMoistureLevel;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node162 a owl:Restriction;
+  owl:onProperty was:x1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node163 a owl:Restriction;
+  owl:onProperty was:y1;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node164 a owl:Restriction;
+  owl:onProperty was:x2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node165 a owl:Restriction;
+  owl:onProperty was:y2;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:integer .
+
+_:node166 a owl:Restriction;
+  owl:onProperty was:RequiredMoistureLevel;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:node167 a owl:Restriction;
+  owl:onProperty was:growsCrop;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Crop .
+
+_:node168 a owl:Restriction;
+  owl:onProperty was:hasSoilMoisture;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:SoilMoisture .
+
+_:node169 a owl:Restriction;
+  owl:onProperty was:hasCoordinates;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onClass was:Coordinates .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#farm-9d762ba9-2faa-423a-a0b8-bbd527ad13d7>
+  a was:Farm;
+  was:has <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#tractor-32baf67a-869e-4268-89c4-585cd05caff1>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#tractor-b7f96a5e-dadb-4812-b409-45f85f16de7d>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-b054bd36-c8f2-4d4e-b1b8-16d3d34df928>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-d2689914-278c-4f52-a4ba-eef62a4a9599>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-a31c8b43-46f4-4b9c-b839-9b40dcfced55>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-2491654a-d045-4514-b5d6-09009a7b481a> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#tractor-32baf67a-869e-4268-89c4-585cd05caff1>
+  a was:Tractor, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "A tractor that can be used for monitoring the moisture level of soil in a farm.";
+  <https://www.w3.org/2019/wot/td#hasSecurityConfiguration> _:node184;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/tractors/1/>;
+  <https://www.w3.org/2019/wot/td#hasActionAffordance> _:node185;
+  <https://purl.org/hmas/hasProfile> <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor1.ttl> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#tractor-b7f96a5e-dadb-4812-b409-45f85f16de7d>
+  a was:Tractor, <https://www.w3.org/2019/wot/td#Thing>;
+  <https://www.w3.org/2019/wot/td#title> "A tractor that can be used for irrigating sections in a farm.";
+  <https://www.w3.org/2019/wot/td#hasSecurityConfiguration> _:node190;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/tractors/2/>;
+  <https://www.w3.org/2019/wot/td#hasActionAffordance> _:node191;
+  <https://purl.org/hmas/hasProfile> <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor2.ttl> .
+
+_:node184 a <https://www.w3.org/2019/wot/security#NoSecurityScheme> .
+
+_:node185 a was:ReadSoilMoistureAffordance, <https://www.w3.org/2019/wot/td#ActionAffordance>;
+  <https://www.w3.org/2019/wot/td#name> "Read Moisture Level";
+  <https://www.w3.org/2019/wot/td#hasForm> _:node186;
+  <https://www.w3.org/2019/wot/td#hasInputSchema> _:node187;
+  <https://www.w3.org/2019/wot/td#hasOutputSchema> _:node189 .
+
+_:node187 a was:Coordinates, <https://www.w3.org/2019/wot/json-schema#ArraySchema>;
+  <https://www.w3.org/2019/wot/json-schema#minItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maxItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#items> _:node188 .
+
+_:node188 a <https://www.w3.org/2019/wot/json-schema#IntegerSchema>;
+  <https://www.w3.org/2019/wot/json-schema#minimum> "0"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maximum> "2"^^xsd:int .
+
+_:node189 a was:SoilMoisture, <https://www.w3.org/2019/wot/json-schema#IntegerSchema> .
+
+_:node190 a <https://www.w3.org/2019/wot/security#NoSecurityScheme> .
+
+_:node191 a was:IrrigateAffordance, <https://www.w3.org/2019/wot/td#ActionAffordance>;
+  <https://www.w3.org/2019/wot/td#name> "Irrigate";
+  <https://www.w3.org/2019/wot/td#hasForm> _:node192;
+  <https://www.w3.org/2019/wot/td#hasInputSchema> _:node193 .
+
+_:node193 a was:Coordinates, <https://www.w3.org/2019/wot/json-schema#ArraySchema>;
+  <https://www.w3.org/2019/wot/json-schema#minItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maxItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#items> _:node194 .
+
+_:node194 a <https://www.w3.org/2019/wot/json-schema#IntegerSchema>;
+  <https://www.w3.org/2019/wot/json-schema#minimum> "0"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maximum> "2"^^xsd:int .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-de2ecf45-b257-44af-837e-1b6d5cb14619>
+  a was:Crop, was:Wheat;
+  was:RequiredMoistureLevel "120";
+  <https://www.w3.org/2019/wot/td#title> "A type of crop." .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-c9ecb8bc-abd6-463e-a677-11cc3918c2eb>
+  a was:Crop, was:Corn;
+  was:RequiredMoistureLevel "80";
+  <https://www.w3.org/2019/wot/td#title> "A type of crop." .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-833d7003-af09-4af0-8f21-adaea1de385e>
+  a was:SoilMoisture;
+  was:currentMoistureLevel "120";
+  <https://www.w3.org/2019/wot/td#title> "The level of moisture in soil.";
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/soilMoisture/1/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-b1024f25-1a0d-4ecf-bedd-5f1e755b79e8>
+  a was:SoilMoisture;
+  was:currentMoistureLevel "120";
+  <https://www.w3.org/2019/wot/td#title> "The level of moisture in soil.";
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/soilMoisture/2/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-a12fed8e-230c-484d-a0b0-0139e6680e6c>
+  a was:SoilMoisture;
+  was:currentMoistureLevel "80";
+  <https://www.w3.org/2019/wot/td#title> "The level of moisture in soil.";
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/soilMoisture/3/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-d8583744-ef29-461e-a535-6db1268c75a7>
+  a was:SoilMoisture;
+  was:currentMoistureLevel "80";
+  <https://www.w3.org/2019/wot/td#title> "The level of moisture in soil.";
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/soilMoisture/4/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-87c1f1ed-8c99-49af-a944-8df8fcd1d9cd>
+  a was:Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  was:x1 0;
+  was:y1 0;
+  was:x2 1;
+  was:y2 1;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/coordinates/1/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-8f93094a-6896-4d32-8f15-938ca1bafb06>
+  a was:Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  was:x1 1;
+  was:y1 0;
+  was:x2 2;
+  was:y2 1;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/coordinates/2/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-c9921b7a-6be4-4860-a7bf-14148fc52f66>
+  a was:Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  was:x1 0;
+  was:y1 1;
+  was:x2 1;
+  was:y2 2;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/coordinates/3/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-e689307b-9ae1-4c88-9985-b55e811508b8>
+  a was:Coordinates, <https://www.w3.org/2019/wot/td#Thing>;
+  was:x1 1;
+  was:y1 1;
+  was:x2 2;
+  was:y2 2;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/coordinates/4/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-b054bd36-c8f2-4d4e-b1b8-16d3d34df928>
+  a was:LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  was:growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-de2ecf45-b257-44af-837e-1b6d5cb14619>;
+  was:hasSoilMoisture <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-833d7003-af09-4af0-8f21-adaea1de385e>;
+  was:hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-87c1f1ed-8c99-49af-a944-8df8fcd1d9cd>;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/sections/1/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-d2689914-278c-4f52-a4ba-eef62a4a9599>
+  a was:LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  was:growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-de2ecf45-b257-44af-837e-1b6d5cb14619>;
+  was:hasSoilMoisture <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-b1024f25-1a0d-4ecf-bedd-5f1e755b79e8>;
+  was:hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-8f93094a-6896-4d32-8f15-938ca1bafb06>;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/sections/2/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-a31c8b43-46f4-4b9c-b839-9b40dcfced55>
+  a was:LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  was:growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-c9ecb8bc-abd6-463e-a677-11cc3918c2eb>;
+  was:hasSoilMoisture <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-a12fed8e-230c-484d-a0b0-0139e6680e6c>;
+  was:hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-c9921b7a-6be4-4860-a7bf-14148fc52f66>;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/sections/3/> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#section-2491654a-d045-4514-b5d6-09009a7b481a>
+  a was:LandSection, <https://www.w3.org/2019/wot/td#Thing>;
+  was:growsCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#crop-c9ecb8bc-abd6-463e-a677-11cc3918c2eb>;
+  was:hasSoilMoisture <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#soilMoisture-d8583744-ef29-461e-a535-6db1268c75a7>;
+  was:hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#coords-e689307b-9ae1-4c88-9985-b55e811508b8>;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/sections/4/> .
+
+_:node12 rdf:first was:ReadSoilMoistureAffordance;
+  rdf:rest _:node13 .
+
+_:node13 rdf:first was:IrrigateAffordance;
+  rdf:rest rdf:nil .
+
+_:node37 rdf:first was:ReadSoilMoistureAffordance;
+  rdf:rest _:node38 .
+
+_:node38 rdf:first was:IrrigateAffordance;
+  rdf:rest rdf:nil .
+
+_:node64 rdf:first was:ReadSoilMoistureAffordance;
+  rdf:rest _:node65 .
+
+_:node65 rdf:first was:IrrigateAffordance;
+  rdf:rest rdf:nil .
+
+_:node90 rdf:first was:ReadSoilMoistureAffordance;
+  rdf:rest _:node91 .
+
+_:node91 rdf:first was:IrrigateAffordance;
+  rdf:rest rdf:nil .
+
+_:node171 rdf:first was:ReadSoilMoistureAffordance;
+  rdf:rest _:node172 .
+
+_:node172 rdf:first was:IrrigateAffordance;
+  rdf:rest rdf:nil .
+
+_:node11 owl:unionOf _:node12 .
+
+_:node36 owl:unionOf _:node37 .
+
+_:node63 owl:unionOf _:node64 .
+
+_:node89 owl:unionOf _:node90 .
+
+_:node170 owl:unionOf _:node171 .
+
+_:node186 <http://www.w3.org/2011/http#methodName> "GET";
+  <https://www.w3.org/2019/wot/hypermedia#hasTarget> <http://localhost:1080/api/tractors/1/moisture>;
+  <https://www.w3.org/2019/wot/hypermedia#forContentType> "application/json";
+  <https://www.w3.org/2019/wot/hypermedia#hasOperationType> <https://www.w3.org/2019/wot/td#invokeAction> .
+
+_:node192 <http://www.w3.org/2011/http#methodName> "PUT";
+  <https://www.w3.org/2019/wot/hypermedia#hasTarget> <http://localhost:1080/api/tractors/2/sprayer>;
+  <https://www.w3.org/2019/wot/hypermedia#forContentType> "application/json";
+  <https://www.w3.org/2019/wot/hypermedia#hasOperationType> <https://www.w3.org/2019/wot/td#invokeAction> .

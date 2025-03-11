@@ -1,0 +1,10 @@
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+
+SELECT ?section WHERE {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#> {
+     BIND (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-jano#farm-9d762ba9-2faa-423a-a0b8-bbd527ad13d7> AS ?farm)
+     ?farm a was:Farm.
+     ?farm was:has ?section.
+     ?section a was:LandSection.
+  }
+}
